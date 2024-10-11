@@ -1,24 +1,50 @@
 #include <FastLED.h>
 #define NUM_LEDS 7
-#define DATA_PIN 3 
+#define DATA_PIN 3
 
 CRGB leds[NUM_LEDS];
 
 void setup() {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
+void all_breath()
+{
+    int x=0;
+    int value=1;
+    do
+    {
+        if(x==64)
+        {
+            value=-1;
+        }
+        for(int j=0;j<NUM_LEDS;j++)
+        {
+            leds[j] = CHSV( 60, 128, x);
+            FastLED.show();
+        }
 
+        delay(3);
+        x+=value;
+    }
+    while(x!=-1);
+    // for(int j=0;j<NUM_LEDS;j++)
+    // {
+    //     leds[j]=CRGB::Black;
+    //     FastLED.show();
+    // }
+
+}
 void singlelight_breath(int n)
 {
         int x=0;
         int value=1;
         do
         {
-            if(x==128)
+            if(x==64)
             {
                 value=-1;
             }
-            leds[n] = CHSV( 60, 40, x);
+            leds[n] = CHSV( 60, 128, x);
             FastLED.show();
             delay(3);
             x+=value;
@@ -30,7 +56,12 @@ void singlelight_breath(int n)
 
 }
 void loop() {
-    singlelight_breath(0);
+    all_breath();
+    for(int i=0;i<NUM_LEDS;i++)
+    {
+        singlelight_breath(i);
+    }
+    delay(1000);
     // int h = 0;
     // for(int j = 0; j< 255; j++) {
     //     for (int i = 0; i < NUM_LEDS; i++) {
